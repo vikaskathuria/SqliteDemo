@@ -187,8 +187,11 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
         implementation "com.google.android.gms:play-services-base:17.1.0"
+implementation "com.google.android.gms:play-services-base:17.1.0"
     implementation "com.google.firebase:firebase-core:17.1.0"
     implementation "com.google.firebase:firebase-messaging:20.0.0"
+implementation 'com.google.firebase:firebase-firestore:21.5.0'
+implementation 'com.google.firebase:firebase-auth:19.3.2'
 
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
