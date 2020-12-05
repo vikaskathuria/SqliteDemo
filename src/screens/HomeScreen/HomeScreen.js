@@ -10,6 +10,7 @@ export default function HomeScreen(props) {
 
     const entityRef = firebase.firestore().collection('entities')
     const userID = props.extraData.id
+    console.log("props",props);
 
     useEffect(() => {
         entityRef
@@ -24,6 +25,9 @@ export default function HomeScreen(props) {
                         newEntities.push(entity)
                     });
                     setEntities(newEntities)
+                    console.log('====================================');
+                    console.log(newEntities,"props",props);
+                    console.log('====================================');
                 },
                 error => {
                     console.log(error)

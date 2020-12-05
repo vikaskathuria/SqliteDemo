@@ -1,4 +1,4 @@
-package com.firebasedemo;
+package com.firebaseproject;
 
 import com.facebook.react.ReactActivity;
 

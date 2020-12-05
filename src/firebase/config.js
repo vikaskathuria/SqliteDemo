@@ -11,15 +11,16 @@ import firebase from 'react-native-firebase';
 // };
 
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCotvqq_tPyhdtoJgaTEghwgoGQkPLDD_I",
-  authDomain: "fir-demo-7a2e6.firebaseapp.com",
-  databaseURL: "https://fir-demo-7a2e6.firebaseio.com",
-  projectId: "fir-demo-7a2e6",
-  storageBucket: "fir-demo-7a2e6.appspot.com",
-  messagingSenderId: "979418951992",
-  appId: "1:979418951992:web:8b1bb31acea7c3452d11cd",
-  measurementId: "G-HX7J27VZ1L"
+  apiKey: "AIzaSyAZ_guvKyTZuDVe5WNaGeTG5PN6IVv6vMM",
+  authDomain: "fir-dbc24.firebaseapp.com",
+  databaseURL: "https://fir-dbc24.firebaseio.com",
+  projectId: "fir-dbc24",
+  storageBucket: "fir-dbc24.appspot.com",
+  messagingSenderId: "818434695053",
+  appId: "1:818434695053:web:3ebbb64b06a22fe1e467c4",
+  measurementId: "G-JEZT1V1100"
 };
 
 
