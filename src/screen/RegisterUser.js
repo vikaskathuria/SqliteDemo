@@ -15,6 +15,7 @@ import Mytextinput from '../components/Mytextinput';
 import Mybutton from '../components/Mybutton';
 import {openDatabase} from 'react-native-sqlite-storage';
 import { StackActions } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var db = openDatabase({name: 'UserDatabase.db'});
 
@@ -23,6 +24,52 @@ const RegisterUser = ({navigation}) => {
   let [userContact, setUserContact] = useState('');
   let [userAddress, setUserAddress] = useState('');
 
+  let goHome=()=>{
+
+  }
+
+ let signUp=()=>{
+
+  db.transaction(function (tx) {
+    tx.executeSql(
+      'INSERT INTO table_user (user_name, user_contact, user_address) VALUES (?,?,?)',
+      [userName, userContact, userAddress],
+      (tx, results) => {
+        console.log('Results', results);
+        if (results.rowsAffected > 0) {
+          Alert.alert(
+            'Success',
+            'You are Registered Successfully',
+            [
+              {
+                text: 'Ok',
+                onPress: () => navigation.dispatch(StackActions.replace('HomeScreen')),
+              },
+            ],
+            {cancelable: false},
+          );
+        } else alert('Registration Failed');
+      },
+    ); 
+  });
+
+
+  db.transaction(async function (tx) {
+    tx.executeSql(
+        'SELECT * FROM table_user where user_contact = ?',
+        [userContact],
+        async (tx, results) => {
+            var len = results.rows.length;
+            console.log('len', len);
+            if (len > 0) {
+                const jsonValue = JSON.stringify(results.rows.item(0))
+                await AsyncStorage.setItem('userToken', jsonValue)
+            } 
+        },
+    );
+});
+
+  }
   let register_user = () => {
     console.log(userName, userContact, userAddress);
 
@@ -38,29 +85,7 @@ const RegisterUser = ({navigation}) => {
       alert('Please fill Address');
       return;
     }
-
-    db.transaction(function (tx) {
-      tx.executeSql(
-        'INSERT INTO table_user (user_name, user_contact, user_address) VALUES (?,?,?)',
-        [userName, userContact, userAddress],
-        (tx, results) => {
-          console.log('Results', results.rowsAffected);
-          if (results.rowsAffected > 0) {
-            Alert.alert(
-              'Success',
-              'You are Registered Successfully',
-              [
-                {
-                  text: 'Ok',
-                  onPress: () => navigation.dispatch(StackActions.replace('HomeScreen')),
-                },
-              ],
-              {cancelable: false},
-            );
-          } else alert('Registration Failed');
-        },
-      ); 
-    });
+   signUp()
   };
 
   return (

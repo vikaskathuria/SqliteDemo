@@ -16,6 +16,7 @@ import ViewAllUser from './src/screen/ViewAllUser';
 import DeleteUser from './src/screen/DeleteUser';
 import Index from './src/screen';
 import Login from './src/screen/Login';
+import Todo from './src/screen/Todo';
 
 const Stack = createStackNavigator();
 
@@ -137,6 +138,21 @@ const App = () => {
             },
           }}
         />
+                <Stack.Screen
+          name="Todo"
+          component={Todo}
+          options={{
+            title: 'To Do', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#f4511e', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
