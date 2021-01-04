@@ -3,6 +3,55 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { firebase } from '../../firebase/config'
+import {
+    LoginButton,
+    AccessToken,
+    GraphRequest,
+    GraphRequestManager,
+    LoginManager
+} from 'react-native-fbsdk';
+
+
+
+export const FBLogin = async (prop) => {
+    LoginManager.logOut()
+    await LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+        async (result) => {
+            if (result.isCancelled) {
+                console.log("Login cancelled");
+
+            } else {
+                console.log(
+                    "Login success with permissions: " +
+                    result.grantedPermissions.toString()
+                );
+                const data = await AccessToken.getCurrentAccessToken();
+                await getUser(data.accessToken)
+                console.log("permission ", data)
+            }
+        },
+        function (error) {
+            console.log("Login fail with error: " + error);
+            LoginManager.logOut()
+        }
+    );
+}
+
+
+async function getUser(token) {
+    await fetch("https://graph.facebook.com/v2.5/me?fields=email,name,picture.type(large),friends&access_token=" + token)
+        .then((response) => response.json())
+        .then(async (json) => {
+            console.log("json", json)
+        })
+        .catch((error) => {
+            console.log("getUsergetUser",error)
+            // reject(strings.Fb_Token_Reject)
+
+        })
+}
+
+
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
@@ -72,7 +121,7 @@ export default function LoginScreen({navigation}) {
                 />
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => onLoginPress()}>
+                    onPress={() => FBLogin()}>
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
